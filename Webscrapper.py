@@ -61,13 +61,6 @@ def scrapper(url, img, misc, depth):
     file.write = soup.get_text()
     print("get text = "+soup.get_text())
 
-    #modele les plus simples, pas de couche cachée
-    #modele trop simple : underfitting = accuracy pourrie sur validation
-    #overfitting : 100% accuracy sur le train et rien en validation, revenir sur un modèle plus simple et petit
-    #faire de la régularisation : - prendre un plus gros dataset jusquà l'underfitting
-    #- faire de la data aug
-
-
     if img == 'Y':
         #get images
         print("récupération des images")
