@@ -48,7 +48,7 @@ def text_from_html(body):
     visible_texts = filter(tag_visible, texts)
     return u" ".join(t.strip() for t in visible_texts)
 
-def scrapper(url, img, misc, depth):
+def scrapper(url, img, depth):
     if depth == 0:
         return
     page = requests.get(url)
@@ -56,21 +56,18 @@ def scrapper(url, img, misc, depth):
     #html = urllib.request.urlopen(URL).read()
     #print("text from html = " + text_from_html(html))
     text = soup.find_all(text=True)
-    print(urlparse(url))
-    file = open(repo.path+"\\texts\\" + repo.path +".txt", "w+")
+    print(urlparse(url).netloc)
+    file = open(repo.path+"\\texts\\" + urlparse(url).netloc + ".txt", "w+")
     file.write = soup.get_text()
     print("get text = "+soup.get_text())
 
     if img == 'Y':
         #get images
         print("récupération des images")
-    if misc == 'Y':
-        #get misc
-        print("récupération du reste")
 
     #print(get_allwebsite_links(url))
     for link in get_allwebsite_links(url):
-        scrapper(link, img, misc, depth-1)
+        scrapper(link, img, depth-1)
     #Récupère une liste des liens présents dans une page
     #response = requests.get(url)
     #liste_liens = []
@@ -125,11 +122,10 @@ if __name__ =="__main__":
     #    print(URL + " n'existe pas sur internet.")
 
     repo = repo_init()
-    print(repo.path)
     img = input("Voulez-vous récupérer les images [Y/N] ? ")
-    misc = input("Voulez-vous récupérer le reste [Y/N] ? ")
+    #misc = input("Voulez-vous récupérer le reste [Y/N] ? ")
     depth = int(input("A quelle profondeur voulez vous aller [1-9]: "))
-    scrapper("https://www.zoho.com/fr/writer/", img, misc, depth)
+    scrapper("https://www.zoho.com/fr/writer/", img, depth)
 
 
     #for i in range(0,depth):
